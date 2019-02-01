@@ -55,7 +55,8 @@ public class ContactListFragment extends Fragment {
                 getActivity()
                         .getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.frameLayout, ViewContactFragment.newInstance((Contact) o));
+                        .replace(R.id.frameLayout, ViewContactFragment.newInstance((Contact) o))
+                        .commit();
             }
         });
         recyclerView.setAdapter(adapter);
