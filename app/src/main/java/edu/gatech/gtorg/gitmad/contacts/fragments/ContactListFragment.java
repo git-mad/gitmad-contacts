@@ -1,11 +1,13 @@
 package edu.gatech.gtorg.gitmad.contacts.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.SearchView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +17,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.gatech.gtorg.gitmad.contacts.OnClick;
 import edu.gatech.gtorg.gitmad.contacts.R;
 import edu.gatech.gtorg.gitmad.contacts.adapters.ContactsAdapter;
+import edu.gatech.gtorg.gitmad.contacts.database.AppDatabase;
 import edu.gatech.gtorg.gitmad.contacts.models.Contact;
 
 
@@ -33,7 +37,6 @@ public class ContactListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_contact_list, container, false);
     }
 
@@ -43,9 +46,18 @@ public class ContactListFragment extends Fragment {
         searchView = view.findViewById(R.id.searchView);
         fab = view.findViewById(R.id.fab);
 
-        contacts = loadData();
+        contacts = new ArrayList<>();
+        loadData();
 
-        adapter = new ContactsAdapter(contacts);
+        adapter = new ContactsAdapter(contacts, new OnClick() {
+            @Override
+            public void onClick(Object o) {
+                getActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frameLayout, ViewContactFragment.newInstance((Contact) o));
+            }
+        });
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -74,8 +86,23 @@ public class ContactListFragment extends Fragment {
         });
     }
 
-    private List<Contact> loadData() {
-        // TODO: Load data from Room
-        return new ArrayList<>();
+    private void loadData() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                contacts.addAll(AppDatabase.getDatabase(getContext()).contactDao().getAll());
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        }).start();
+    }
+
+    public static ContactListFragment newInstance() {
+        return new ContactListFragment();
     }
 }

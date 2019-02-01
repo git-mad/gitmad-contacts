@@ -2,15 +2,23 @@ package edu.gatech.gtorg.gitmad.contacts.fragments;
 
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import edu.gatech.gtorg.gitmad.contacts.R;
+import edu.gatech.gtorg.gitmad.contacts.database.AppDatabase;
+import edu.gatech.gtorg.gitmad.contacts.models.Contact;
 
 public class AddContactFragment extends Fragment {
+
+    private EditText etFirstName;
+    private EditText etLastName;
 
     public AddContactFragment() {
         // Required empty public constructor
@@ -25,7 +33,29 @@ public class AddContactFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        etFirstName = view.findViewById(R.id.etFirstName);
+        etLastName = view.findViewById(R.id.etLastName);
+        view.findViewById(R.id.btnAdd).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String firstName = etFirstName.getText().toString();
+                        String lastName = etLastName.getText().toString();
 
+                        Contact toAdd = new Contact(firstName, lastName);
+
+                        AppDatabase.getDatabase(v.getContext()).contactDao().insert(toAdd);
+                    }
+                }).start();
+
+                getActivity()
+                        .getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.frameLayout, ContactListFragment.newInstance())
+                        .commit();
+            }
+        });
     }
 
     public static AddContactFragment newInstance() {
