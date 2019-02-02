@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/contactListFragment">
+
+    <fragment
+        android:id="@+id/addContactFragment"
+        android:name="edu.gatech.gtorg.gitmad.contacts.fragments.AddContactFragment"
+        android:label="fragment_add_contact"
+        tools:layout="@layout/fragment_add_contact" />
+    <fragment
+        android:id="@+id/contactListFragment"
+        android:name="edu.gatech.gtorg.gitmad.contacts.fragments.ContactListFragment"
+        android:label="fragment_contact_list"
+        tools:layout="@layout/fragment_contact_list" >
+        <action
+            android:id="@+id/action_contactListFragment_to_viewContactFragment"
+            app:destination="@id/viewContactFragment" />
+        <action
+            android:id="@+id/action_contactListFragment_to_addContactFragment2"
+            app:destination="@id/addContactFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewContactFragment"
+        android:name="edu.gatech.gtorg.gitmad.contacts.fragments.ViewContactFragment"
+        android:label="fragment_view_contact"
+        tools:layout="@layout/fragment_view_contact" />
+</navigation>

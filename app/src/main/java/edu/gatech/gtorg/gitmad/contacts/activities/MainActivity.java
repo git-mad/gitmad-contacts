@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.frameLayout, ContactListFragment.newInstance())
+                .add(R.id.frameLayout, ContactListFragment.newInstance())
                 .commit();
     }
 }
