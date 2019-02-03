@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
@@ -41,7 +42,7 @@ public class ContactListFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, Bundle savedInstanceState) {
         recyclerView = view.findViewById(R.id.rvContacts);
         searchView = view.findViewById(R.id.searchView);
         fab = view.findViewById(R.id.fab);
@@ -52,11 +53,11 @@ public class ContactListFragment extends Fragment {
         adapter = new ContactsAdapter(contacts, new OnClick() {
             @Override
             public void onClick(Object o) {
-                getActivity()
-                        .getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.frameLayout, ViewContactFragment.newInstance((Contact) o))
-                        .commit();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("contact", (Contact) o);
+
+                Navigation.findNavController(view)
+                        .navigate(R.id.action_contactListFragment_to_viewContactFragment, bundle);
             }
         });
         recyclerView.setAdapter(adapter);
@@ -65,7 +66,7 @@ public class ContactListFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                // We don't care about submit since we're filtering  in onChange.
+                // We don't care about submit since we're filtering in onChange.
                 return true;
             }
 
@@ -76,15 +77,9 @@ public class ContactListFragment extends Fragment {
             }
         });
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.frameLayout,
-                                AddContactFragment.newInstance())
-                        .commit();
-            }
-        });
+        fab.setOnClickListener(
+                Navigation.createNavigateOnClickListener(R.id.action_contactListFragment_to_addContactFragment)
+        );
     }
 
     private void loadData() {

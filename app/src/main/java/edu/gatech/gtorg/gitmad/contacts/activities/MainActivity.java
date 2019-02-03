@@ -14,9 +14,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.frameLayout, ContactListFragment.newInstance())
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment, ContactListFragment.newInstance())
                 .commit();
+//
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .add(R.id.frameLayout, ContactListFragment.newInstance())
+//                .commit();
     }
 }

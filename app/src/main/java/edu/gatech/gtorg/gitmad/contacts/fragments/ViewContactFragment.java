@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.navigation.Navigation;
 import edu.gatech.gtorg.gitmad.contacts.R;
+import edu.gatech.gtorg.gitmad.contacts.database.AppDatabase;
 import edu.gatech.gtorg.gitmad.contacts.models.Contact;
 
 public class ViewContactFragment extends Fragment {
@@ -49,5 +51,21 @@ public class ViewContactFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         ((TextView) view.findViewById(R.id.tvFirstName)).setText(contact.getFirstName());
         ((TextView) view.findViewById(R.id.tvLastName)).setText(contact.getLastName());
+
+        view.findViewById(R.id.btnDelete).setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View v) {
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                AppDatabase.getDatabase(v.getContext()).contactDao().delete(contact);
+                            }
+                        }).start();
+
+                        Navigation.findNavController(v).navigate(R.id.action_viewContactFragment_to_contactListFragment);
+                    }
+                }
+        );
     }
 }
