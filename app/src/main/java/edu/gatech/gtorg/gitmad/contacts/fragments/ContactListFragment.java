@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
@@ -56,8 +55,10 @@ public class ContactListFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("contact", (Contact) o);
 
-                Navigation.findNavController(view)
-                        .navigate(R.id.action_contactListFragment_to_viewContactFragment, bundle);
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.mainFrameLayout, ViewContactFragment.newInstance((Contact) o))
+                        .addToBackStack(null)
+                        .commit();
             }
         });
         recyclerView.setAdapter(adapter);
@@ -77,9 +78,16 @@ public class ContactListFragment extends Fragment {
             }
         });
 
-        fab.setOnClickListener(
-                Navigation.createNavigateOnClickListener(R.id.action_contactListFragment_to_addContactFragment)
-        );
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.mainFrameLayout, AddContactFragment.newInstance())
+                        .addToBackStack(null)
+                        .commit();
+
+            }
+        });
     }
 
     private void loadData() {

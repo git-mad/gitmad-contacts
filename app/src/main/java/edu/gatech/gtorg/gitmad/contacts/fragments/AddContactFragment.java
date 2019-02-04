@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import androidx.navigation.Navigation;
 import edu.gatech.gtorg.gitmad.contacts.R;
 import edu.gatech.gtorg.gitmad.contacts.database.AppDatabase;
 import edu.gatech.gtorg.gitmad.contacts.models.Contact;
@@ -50,8 +49,12 @@ public class AddContactFragment extends Fragment {
                     }
                 }).start();
 
-                Navigation.findNavController(v).navigate(R.id.action_addContactFragment_to_contactListFragment);
+                getFragmentManager().popBackStack();
             }
         });
+    }
+
+    static AddContactFragment newInstance() {
+        return new AddContactFragment();
     }
 }
