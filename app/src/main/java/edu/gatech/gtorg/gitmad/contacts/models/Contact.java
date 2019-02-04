@@ -1,7 +1,5 @@
 package edu.gatech.gtorg.gitmad.contacts.models;
 
-import android.os.Parcelable;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;

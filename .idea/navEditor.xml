@@ -17,6 +17,15 @@
                             <option name="y" value="-85" />
                           </Point>
                         </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_addContactFragment_to_contactListFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
                       </LayoutPositions>
                     </value>
                   </entry>
@@ -31,7 +40,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_contactListFragment_to_addContactFragment2">
+                            <entry key="action_contactListFragment_to_addContactFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -54,6 +63,15 @@
                             <option name="x" value="257" />
                             <option name="y" value="204" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_viewContactFragment_to_contactListFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>

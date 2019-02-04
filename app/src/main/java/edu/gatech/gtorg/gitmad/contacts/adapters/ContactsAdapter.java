@@ -20,12 +20,12 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
     private List<Contact> contacts;
     private OnClick onClick;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         private View container;
         private ImageView imageView;
         private TextView textView;
 
-        public ViewHolder(View container, ImageView imageView, TextView textView) {
+        ViewHolder(View container, ImageView imageView, TextView textView) {
             super(container);
             this.container = container;
             this.imageView = imageView;
@@ -49,7 +49,6 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-//        holder.imageView
         holder.textView.setText(contacts.get(position).getName());
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override

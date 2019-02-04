@@ -8,7 +8,7 @@ import java.util.List;
 import androidx.room.TypeConverter;
 import edu.gatech.gtorg.gitmad.contacts.models.Attribute;
 
-public class DataConverter {
+class DataConverter {
     @TypeConverter
     public String fromAttributes(List<Attribute> attributes) {
         return (new Gson()).toJson(attributes);
