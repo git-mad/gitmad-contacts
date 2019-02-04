@@ -6,14 +6,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
-import java.util.jar.Attributes;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import edu.gatech.gtorg.gitmad.contacts.R;
 import edu.gatech.gtorg.gitmad.contacts.models.Attribute;
 
-public class AttributesAdapter extends RecyclerView.Adapter<AttributesAdapter.ViewHolder> {
+public class AttributeAdapter extends RecyclerView.Adapter<AttributeAdapter.ViewHolder> {
 
     private List<Attribute> attributes;
 
@@ -28,13 +27,13 @@ public class AttributesAdapter extends RecyclerView.Adapter<AttributesAdapter.Vi
         }
     }
 
-    public AttributesAdapter(List<Attribute> attributes) {
+    public AttributeAdapter(List<Attribute> attributes) {
         this.attributes = attributes;
     }
 
     @NonNull
     @Override
-    public AttributesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AttributeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_attribute, parent, false);
         return new ViewHolder(v, (TextView) v.findViewById(R.id.tvKey), (TextView) v.findViewById(R.id.tvValue));
     }

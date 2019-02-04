@@ -17,7 +17,6 @@ import java.util.List;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import edu.gatech.gtorg.gitmad.contacts.R;
-import edu.gatech.gtorg.gitmad.contacts.adapters.AttributesAdapter;
 import edu.gatech.gtorg.gitmad.contacts.adapters.EditAttributeAdapter;
 import edu.gatech.gtorg.gitmad.contacts.database.AppDatabase;
 import edu.gatech.gtorg.gitmad.contacts.models.Attribute;

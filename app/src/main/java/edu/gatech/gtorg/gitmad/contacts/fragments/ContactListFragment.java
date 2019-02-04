@@ -19,7 +19,7 @@ import java.util.List;
 
 import edu.gatech.gtorg.gitmad.contacts.OnClick;
 import edu.gatech.gtorg.gitmad.contacts.R;
-import edu.gatech.gtorg.gitmad.contacts.adapters.ContactsAdapter;
+import edu.gatech.gtorg.gitmad.contacts.adapters.ContactAdapter;
 import edu.gatech.gtorg.gitmad.contacts.database.AppDatabase;
 import edu.gatech.gtorg.gitmad.contacts.models.Contact;
 
@@ -27,7 +27,7 @@ import edu.gatech.gtorg.gitmad.contacts.models.Contact;
 public class ContactListFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private ContactsAdapter adapter;
+    private ContactAdapter adapter;
 
     private SearchView searchView;
     private FloatingActionButton fab;
@@ -49,7 +49,7 @@ public class ContactListFragment extends Fragment {
         contacts = new ArrayList<>();
         loadData();
 
-        adapter = new ContactsAdapter(contacts, new OnClick() {
+        adapter = new ContactAdapter(contacts, new OnClick() {
             @Override
             public void onClick(Object o) {
                 Bundle bundle = new Bundle();

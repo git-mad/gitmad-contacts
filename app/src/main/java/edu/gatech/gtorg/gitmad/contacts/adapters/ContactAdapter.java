@@ -15,7 +15,7 @@ import edu.gatech.gtorg.gitmad.contacts.OnClick;
 import edu.gatech.gtorg.gitmad.contacts.R;
 import edu.gatech.gtorg.gitmad.contacts.models.Contact;
 
-public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHolder> {
+public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> {
 
     private List<Contact> contacts;
     private OnClick onClick;
@@ -33,14 +33,14 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
         }
     }
 
-    public ContactsAdapter(List<Contact> contacts, OnClick onClick) {
+    public ContactAdapter(List<Contact> contacts, OnClick onClick) {
         this.contacts = contacts;
         this.onClick = onClick;
     }
 
     @NonNull
     @Override
-    public ContactsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ContactAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_contact, parent, false);
         return new ViewHolder(v,
                 (ImageView) v.findViewById(R.id.ivContact),

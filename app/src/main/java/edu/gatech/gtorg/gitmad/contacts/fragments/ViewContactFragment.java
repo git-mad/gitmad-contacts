@@ -2,6 +2,7 @@ package edu.gatech.gtorg.gitmad.contacts.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -12,7 +13,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import edu.gatech.gtorg.gitmad.contacts.R;
-import edu.gatech.gtorg.gitmad.contacts.adapters.AttributesAdapter;
+import edu.gatech.gtorg.gitmad.contacts.adapters.AttributeAdapter;
 import edu.gatech.gtorg.gitmad.contacts.database.AppDatabase;
 import edu.gatech.gtorg.gitmad.contacts.models.Contact;
 
@@ -21,7 +22,8 @@ public class ViewContactFragment extends Fragment {
 
     private Contact contact;
 
-    private AttributesAdapter attributesAdapter;
+    private RecyclerView rvAttributes;
+    private AttributeAdapter attributeAdapter;
 
     public ViewContactFragment() {
         // Required empty public constructor
@@ -44,7 +46,7 @@ public class ViewContactFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_view_contact, container, false);
     }
@@ -54,9 +56,10 @@ public class ViewContactFragment extends Fragment {
         ((TextView) view.findViewById(R.id.tvFirstName)).setText(contact.getFirstName());
         ((TextView) view.findViewById(R.id.tvLastName)).setText(contact.getLastName());
 
-        attributesAdapter = new AttributesAdapter(contact.getAttributes());
-        ((RecyclerView) view.findViewById(R.id.rvAttributes)).setAdapter(attributesAdapter);
-        ((RecyclerView) view.findViewById(R.id.rvAttributes)).setLayoutManager(new LinearLayoutManager(getContext()));
+        rvAttributes = view.findViewById(R.id.rvAttributes);
+        attributeAdapter = new AttributeAdapter(contact.getAttributes());
+        rvAttributes.setAdapter(attributeAdapter);
+        rvAttributes.setLayoutManager(new LinearLayoutManager(getContext()));
 
         view.findViewById(R.id.btnDelete).setOnClickListener(
                 new View.OnClickListener() {
