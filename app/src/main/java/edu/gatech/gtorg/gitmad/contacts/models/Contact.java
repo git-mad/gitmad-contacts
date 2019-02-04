@@ -16,6 +16,8 @@ public class Contact implements Serializable {
     @NonNull
     private String id;
 
+    private byte[] picture;
+
     private String firstName;
 
     private String lastName;
@@ -24,6 +26,7 @@ public class Contact implements Serializable {
 
     public Contact() {
         this.id = UUID.randomUUID().toString();
+        picture = new byte[0];
         attributes = new ArrayList<>();
     }
 
@@ -46,6 +49,14 @@ public class Contact implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public byte[] getPicture() {
+        return picture;
+    }
+
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
     }
 
     public String getFirstName() {

@@ -1,5 +1,7 @@
 package edu.gatech.gtorg.gitmad.contacts.fragments;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,7 +10,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,9 +56,12 @@ public class ViewContactFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(final View view, Bundle savedInstanceState) {
         ((TextView) view.findViewById(R.id.tvFirstName)).setText(contact.getFirstName());
         ((TextView) view.findViewById(R.id.tvLastName)).setText(contact.getLastName());
+
+        Bitmap bmp = BitmapFactory.decodeByteArray(contact.getPicture(), 0, contact.getPicture().length);
+        ((ImageView) view.findViewById(R.id.ivProfile)).setImageBitmap(bmp);
 
         rvAttributes = view.findViewById(R.id.rvAttributes);
         attributeAdapter = new AttributeAdapter(contact.getAttributes());

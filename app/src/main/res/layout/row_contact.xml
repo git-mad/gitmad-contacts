@@ -5,18 +5,17 @@
     android:orientation="horizontal"
     android:padding="4dp">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivContact"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:contentDescription="TODO"
         android:src="@drawable/person" />
 
     <TextView
         android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
         android:layout_gravity="center_vertical"
+        android:layout_marginStart="12dp"
         android:textSize="24sp" />
 </LinearLayout>
