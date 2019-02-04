@@ -9,7 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import edu.gatech.gtorg.gitmad.contacts.R;
+import edu.gatech.gtorg.gitmad.contacts.adapters.AttributesAdapter;
 import edu.gatech.gtorg.gitmad.contacts.database.AppDatabase;
 import edu.gatech.gtorg.gitmad.contacts.models.Contact;
 
@@ -17,6 +20,8 @@ public class ViewContactFragment extends Fragment {
     private static final String ARG_CONTACT = "contact";
 
     private Contact contact;
+
+    private AttributesAdapter attributesAdapter;
 
     public ViewContactFragment() {
         // Required empty public constructor
@@ -48,6 +53,10 @@ public class ViewContactFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         ((TextView) view.findViewById(R.id.tvFirstName)).setText(contact.getFirstName());
         ((TextView) view.findViewById(R.id.tvLastName)).setText(contact.getLastName());
+
+        attributesAdapter = new AttributesAdapter(contact.getAttributes());
+        ((RecyclerView) view.findViewById(R.id.rvAttributes)).setAdapter(attributesAdapter);
+        ((RecyclerView) view.findViewById(R.id.rvAttributes)).setLayoutManager(new LinearLayoutManager(getContext()));
 
         view.findViewById(R.id.btnDelete).setOnClickListener(
                 new View.OnClickListener() {

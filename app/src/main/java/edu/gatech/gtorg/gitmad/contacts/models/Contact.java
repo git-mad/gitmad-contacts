@@ -1,6 +1,7 @@
 package edu.gatech.gtorg.gitmad.contacts.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,12 +24,20 @@ public class Contact implements Serializable {
 
     public Contact() {
         this.id = UUID.randomUUID().toString();
+        attributes = new ArrayList<>();
     }
 
     public Contact(String firstName, String lastName) {
         this();
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public Contact(String firstName, String lastName, List<Attribute> attributes) {
+        this();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.attributes = attributes;
     }
 
     public String getId() {
