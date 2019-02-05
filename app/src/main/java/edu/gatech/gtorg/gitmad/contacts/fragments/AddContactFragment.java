@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -90,6 +91,16 @@ public class AddContactFragment extends Fragment {
                     public void run() {
                         String firstName = etFirstName.getText().toString();
                         String lastName = etLastName.getText().toString();
+
+                        if (firstName.length() == 0) {
+                            Toast.makeText(getContext(), "Missing first name!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        if (lastName.length() == 0) {
+                            Toast.makeText(getContext(), "Missing last name!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
 
                         List<Attribute> completedAttributes = new ArrayList<>();
                         for (int i = 0; i < rvEditAttributes.getChildCount(); i++) {
