@@ -1,5 +1,7 @@
 package edu.gatech.gtorg.gitmad.contacts.models;
 
+import android.net.Uri;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,17 +18,16 @@ public class Contact implements Serializable {
     @NonNull
     private String id;
 
-    private byte[] picture;
-
     private String firstName;
 
     private String lastName;
+
+    private String profileUri;
 
     private List<Attribute> attributes;
 
     public Contact() {
         this.id = UUID.randomUUID().toString();
-        picture = new byte[0];
         attributes = new ArrayList<>();
     }
 
@@ -51,12 +52,12 @@ public class Contact implements Serializable {
         this.id = id;
     }
 
-    public byte[] getPicture() {
-        return picture;
+    public String getProfileUri() {
+        return profileUri;
     }
 
-    public void setPicture(byte[] picture) {
-        this.picture = picture;
+    public void setProfileUri(String profileUri) {
+        this.profileUri = profileUri;
     }
 
     public String getFirstName() {

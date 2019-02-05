@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,8 +54,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         holder.textView.setText(contacts.get(position).getName());
 
-        Bitmap bmp = BitmapFactory.decodeByteArray(contacts.get(position).getPicture(), 0, contacts.get(position).getPicture().length);
-        holder.imageView.setImageBitmap(bmp);
+        holder.imageView.setImageURI(Uri.parse(contacts.get(position).getProfileUri()));
 
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override

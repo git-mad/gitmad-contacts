@@ -3,12 +3,16 @@ package edu.gatech.gtorg.gitmad.contacts.fragments;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +20,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +45,8 @@ public class AddContactFragment extends Fragment {
     private RecyclerView rvEditAttributes;
     private EditAttributeAdapter editAttributesAdapter;
     private List<Attribute> attributes;
+
+    private Uri tempUri;
 
     Contact contact;
 
@@ -113,21 +121,35 @@ public class AddContactFragment extends Fragment {
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException e) {
+                Log.e("AddContactFragment", "Camera", e);
+            }
+
+            if (photoFile != null) {
+                Uri photoUri = FileProvider.getUriForFile(getContext(), "edu.gatech.gtorg.gitmad.contacts", photoFile);
+                tempUri = photoUri;
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+            }
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
+    }
+
+    private File createImageFile() throws IOException {
+        return File.createTempFile(
+                contact.getId(),
+                ".jpg",
+                getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES));
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap bitmap = (Bitmap) extras.get("data");
-            ivProfile.setImageBitmap(bitmap);
-
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            contact.setPicture(stream.toByteArray());
+            ivProfile.setImageURI(tempUri);
+            contact.setProfileUri(tempUri.toString());
         }
     }
 

@@ -2,6 +2,7 @@ package edu.gatech.gtorg.gitmad.contacts.fragments;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -60,8 +61,7 @@ public class ViewContactFragment extends Fragment {
         ((TextView) view.findViewById(R.id.tvFirstName)).setText(contact.getFirstName());
         ((TextView) view.findViewById(R.id.tvLastName)).setText(contact.getLastName());
 
-        Bitmap bmp = BitmapFactory.decodeByteArray(contact.getPicture(), 0, contact.getPicture().length);
-        ((ImageView) view.findViewById(R.id.ivProfile)).setImageBitmap(bmp);
+        ((ImageView) view.findViewById(R.id.ivProfile)).setImageURI(Uri.parse(contact.getProfileUri()));
 
         rvAttributes = view.findViewById(R.id.rvAttributes);
         attributeAdapter = new AttributeAdapter(contact.getAttributes());

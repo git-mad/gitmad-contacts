@@ -1,5 +1,7 @@
 package edu.gatech.gtorg.gitmad.contacts.database;
 
+import android.net.Uri;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -20,5 +22,15 @@ class DataConverter {
                 new TypeToken<List<Attribute>>() {
                 }.getType()
         );
+    }
+
+    @TypeConverter
+    public String fromPicture(Uri picture) {
+        return (new Gson()).toJson(picture);
+    }
+
+    @TypeConverter
+    public Uri toPicture(String json) {
+        return (new Gson()).fromJson(json, Uri.class);
     }
 }
