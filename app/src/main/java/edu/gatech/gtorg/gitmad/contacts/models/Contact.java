@@ -1,7 +1,5 @@
 package edu.gatech.gtorg.gitmad.contacts.models;
 
-import android.net.Uri;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
