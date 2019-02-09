@@ -3,10 +3,15 @@ package edu.gatech.gtorg.gitmad.contacts.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -17,6 +22,7 @@ import edu.gatech.gtorg.gitmad.contacts.models.Attribute;
 
 public class EditAttributeAdapter extends RecyclerView.Adapter<EditAttributeAdapter.ViewHolder> {
 
+    private static final String[] keys = new String[]{"Email", "Phone", "Address", "Facebook", "Instagram", "Twitter"};
     private List<Attribute> attributes;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -42,6 +48,11 @@ public class EditAttributeAdapter extends RecyclerView.Adapter<EditAttributeAdap
     @Override
     public EditAttributeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_edit_attribute, parent, false);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(v.getContext(), android.R.layout.simple_dropdown_item_1line, keys);
+        AutoCompleteTextView textView = v.findViewById(R.id.etKey);
+        textView.setAdapter(adapter);
+
         return new ViewHolder(v,
                 (EditText) v.findViewById(R.id.etKey),
                 (EditText) v.findViewById(R.id.etValue),
@@ -51,7 +62,7 @@ public class EditAttributeAdapter extends RecyclerView.Adapter<EditAttributeAdap
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         holder.container.setTag(attributes.get(position));
-        holder.etKey.setText(attributes.get(position).getValue());
+        holder.etKey.setText(attributes.get(position).getKey());
         holder.etValue.setText(attributes.get(position).getValue());
 
         holder.ivDelete.setOnClickListener(new View.OnClickListener() {

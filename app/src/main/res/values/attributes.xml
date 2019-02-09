@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="attributes">
+        <item>Email</item>
+        <item>Address</item>
+        <item>Phone</item>
+        <item>Facebook</item>
+        <item>Twitter</item>
+        <item>Other</item>
+    </string-array>
+</resources>
