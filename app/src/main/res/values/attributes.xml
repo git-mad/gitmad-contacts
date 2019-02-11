@@ -6,6 +6,8 @@
         <item>Phone</item>
         <item>Facebook</item>
         <item>Twitter</item>
+        <item>Instagram</item>
+        <item>Snapchat</item>
         <item>Other</item>
     </string-array>
 </resources>
