@@ -54,7 +54,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         holder.textView.setText(contacts.get(position).getName());
 
-        holder.imageView.setImageURI(Uri.parse(contacts.get(position).getProfileUri()));
+        if (contacts.get(position).getProfileUri() != null) {
+            holder.imageView.setImageURI(Uri.parse(contacts.get(position).getProfileUri()));
+        }
 
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override

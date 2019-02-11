@@ -1,11 +1,13 @@
 package edu.gatech.gtorg.gitmad.contacts.models;
 
-public class Attribute {
+import java.io.Serializable;
+
+public class Attribute implements Serializable {
     String key;
     String value;
 
     public Attribute() {
-        
+
     }
 
     public Attribute(String key, String value) {

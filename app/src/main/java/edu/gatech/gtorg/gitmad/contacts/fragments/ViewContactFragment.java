@@ -61,7 +61,9 @@ public class ViewContactFragment extends Fragment {
         ((TextView) view.findViewById(R.id.tvFirstName)).setText(contact.getFirstName());
         ((TextView) view.findViewById(R.id.tvLastName)).setText(contact.getLastName());
 
-        ((ImageView) view.findViewById(R.id.ivProfile)).setImageURI(Uri.parse(contact.getProfileUri()));
+        if (contact.getProfileUri() != null) {
+            ((ImageView) view.findViewById(R.id.ivProfile)).setImageURI(Uri.parse(contact.getProfileUri()));
+        }
 
         rvAttributes = view.findViewById(R.id.rvAttributes);
         attributeAdapter = new AttributeAdapter(contact.getAttributes());

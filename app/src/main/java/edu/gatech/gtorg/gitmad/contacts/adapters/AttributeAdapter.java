@@ -54,16 +54,17 @@ public class AttributeAdapter extends RecyclerView.Adapter<AttributeAdapter.View
             @Override
             public void onClick(View v) {
                 String key = attributes.get(position).getKey();
+                String value = attributes.get(position).getValue();
                 Intent intent = new Intent();
                 switch (key) {
                     case "Email":
                         intent = new Intent(Intent.ACTION_SENDTO);
-                        intent.putExtra(Intent.EXTRA_EMAIL, key);
+                        intent.putExtra(Intent.EXTRA_EMAIL, value);
                         break;
                     case "Address":
                         intent = new Intent(Intent.ACTION_VIEW);
                         try {
-                            intent.setData(Uri.parse("geo:0,0?q=" + URLEncoder.encode(key, "UTF-8")));
+                            intent.setData(Uri.parse("geo:0,0?q=" + URLEncoder.encode(value, "UTF-8")));
                         } catch (UnsupportedEncodingException e) {
                             Log.e("AttributeAdapter", "Address Encoding", e);
                             return;
@@ -71,23 +72,23 @@ public class AttributeAdapter extends RecyclerView.Adapter<AttributeAdapter.View
                         break;
                     case "Phone":
                         intent = new Intent(Intent.ACTION_DIAL);
-                        intent.setData(Uri.parse("tel:" + key));
+                        intent.setData(Uri.parse("tel:" + value));
                         break;
                     case "Facebook":
                         intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setData(Uri.parse("https://www.facebook.com/" + key));
+                        intent.setData(Uri.parse("https://www.facebook.com/" + value));
                         break;
                     case "Twitter":
                         intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setData(Uri.parse("https://www.twitter.com/" + key));
+                        intent.setData(Uri.parse("https://www.twitter.com/" + value));
                         break;
                     case "Instagram":
                         intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setData(Uri.parse("https://www.instagram.com/" + key));
+                        intent.setData(Uri.parse("https://www.instagram.com/" + value));
                         break;
                     case "Snapchat":
                         intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setData(Uri.parse("https://www.snapchat.com/" + key));
+                        intent.setData(Uri.parse("https://www.snapchat.com/" + value));
                         break;
                     default:
                         // Unrecognized key, don't do anything
