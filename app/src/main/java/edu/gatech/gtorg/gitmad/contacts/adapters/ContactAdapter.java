@@ -3,8 +3,6 @@ package edu.gatech.gtorg.gitmad.contacts.adapters;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,14 +12,14 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import edu.gatech.gtorg.gitmad.contacts.OnClick;
+import edu.gatech.gtorg.gitmad.contacts.CustomOnClick;
 import edu.gatech.gtorg.gitmad.contacts.R;
 import edu.gatech.gtorg.gitmad.contacts.models.Contact;
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> {
 
     private List<Contact> contacts;
-    private OnClick onClick;
+    private CustomOnClick customOnClick;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         private View container;
@@ -36,9 +34,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         }
     }
 
-    public ContactAdapter(List<Contact> contacts, OnClick onClick) {
+    public ContactAdapter(List<Contact> contacts, CustomOnClick customOnClick) {
         this.contacts = contacts;
-        this.onClick = onClick;
+        this.customOnClick = customOnClick;
     }
 
     @NonNull
@@ -61,7 +59,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClick.onClick(contacts.get(position));
+                customOnClick.onItemClick(contacts.get(position));
             }
         });
     }

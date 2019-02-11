@@ -17,7 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.gatech.gtorg.gitmad.contacts.OnClick;
+import edu.gatech.gtorg.gitmad.contacts.CustomOnClick;
 import edu.gatech.gtorg.gitmad.contacts.R;
 import edu.gatech.gtorg.gitmad.contacts.adapters.ContactAdapter;
 import edu.gatech.gtorg.gitmad.contacts.database.AppDatabase;
@@ -30,7 +30,6 @@ public class ContactListFragment extends Fragment {
     private ContactAdapter adapter;
 
     private SearchView searchView;
-    private FloatingActionButton fab;
 
     private List<Contact> contacts;
 
@@ -44,14 +43,13 @@ public class ContactListFragment extends Fragment {
     public void onViewCreated(@NonNull final View view, Bundle savedInstanceState) {
         recyclerView = view.findViewById(R.id.rvContacts);
         searchView = view.findViewById(R.id.searchView);
-        fab = view.findViewById(R.id.fab);
 
         contacts = new ArrayList<>();
         loadData();
 
-        adapter = new ContactAdapter(contacts, new OnClick() {
+        adapter = new ContactAdapter(contacts, new CustomOnClick() {
             @Override
-            public void onClick(Object o) {
+            public void onItemClick(Object o) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("contact", (Contact) o);
 
@@ -64,6 +62,7 @@ public class ContactListFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        // TODO: Implement SearchView
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -78,14 +77,14 @@ public class ContactListFragment extends Fragment {
             }
         });
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        // fab stands for Floating Action Button
+        view.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getFragmentManager().beginTransaction()
                         .replace(R.id.mainFrameLayout, AddContactFragment.newInstance())
                         .addToBackStack(null)
                         .commit();
-
             }
         });
     }

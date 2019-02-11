@@ -57,7 +57,7 @@ public class ViewContactFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(final View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, Bundle savedInstanceState) {
         ((TextView) view.findViewById(R.id.tvFirstName)).setText(contact.getFirstName());
         ((TextView) view.findViewById(R.id.tvLastName)).setText(contact.getLastName());
 

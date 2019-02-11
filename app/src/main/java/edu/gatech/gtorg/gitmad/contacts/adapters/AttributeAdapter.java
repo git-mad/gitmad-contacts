@@ -55,11 +55,15 @@ public class AttributeAdapter extends RecyclerView.Adapter<AttributeAdapter.View
             public void onClick(View v) {
                 String key = attributes.get(position).getKey();
                 String value = attributes.get(position).getValue();
-                Intent intent = new Intent();
+                Intent intent;
                 switch (key) {
                     case "Email":
                         intent = new Intent(Intent.ACTION_SENDTO);
                         intent.putExtra(Intent.EXTRA_EMAIL, value);
+                        break;
+                    case "Phone":
+                        intent = new Intent(Intent.ACTION_DIAL);
+                        intent.setData(Uri.parse("tel:" + value));
                         break;
                     case "Address":
                         intent = new Intent(Intent.ACTION_VIEW);
@@ -70,21 +74,17 @@ public class AttributeAdapter extends RecyclerView.Adapter<AttributeAdapter.View
                             return;
                         }
                         break;
-                    case "Phone":
-                        intent = new Intent(Intent.ACTION_DIAL);
-                        intent.setData(Uri.parse("tel:" + value));
-                        break;
                     case "Facebook":
                         intent = new Intent(Intent.ACTION_VIEW);
                         intent.setData(Uri.parse("https://www.facebook.com/" + value));
                         break;
-                    case "Twitter":
-                        intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setData(Uri.parse("https://www.twitter.com/" + value));
-                        break;
                     case "Instagram":
                         intent = new Intent(Intent.ACTION_VIEW);
                         intent.setData(Uri.parse("https://www.instagram.com/" + value));
+                        break;
+                    case "Twitter":
+                        intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("https://www.twitter.com/" + value));
                         break;
                     case "Snapchat":
                         intent = new Intent(Intent.ACTION_VIEW);

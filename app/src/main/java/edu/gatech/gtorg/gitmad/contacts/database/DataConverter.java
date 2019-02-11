@@ -23,14 +23,4 @@ class DataConverter {
                 }.getType()
         );
     }
-
-    @TypeConverter
-    public String fromPicture(Uri picture) {
-        return (new Gson()).toJson(picture);
-    }
-
-    @TypeConverter
-    public Uri toPicture(String json) {
-        return (new Gson()).fromJson(json, Uri.class);
-    }
 }
