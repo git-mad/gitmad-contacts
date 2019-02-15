@@ -3,8 +3,8 @@ package edu.gatech.gtorg.gitmad.contacts.models;
 import java.io.Serializable;
 
 public class Attribute implements Serializable {
-    String key;
-    String value;
+    private String key;
+    private String value;
 
     public Attribute() {
 

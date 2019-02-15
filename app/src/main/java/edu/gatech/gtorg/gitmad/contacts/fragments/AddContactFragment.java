@@ -37,7 +37,7 @@ import edu.gatech.gtorg.gitmad.contacts.models.Contact;
 import static android.app.Activity.RESULT_OK;
 
 public class AddContactFragment extends Fragment {
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
 
     private EditText etFirstName;
     private EditText etLastName;
@@ -92,20 +92,29 @@ public class AddContactFragment extends Fragment {
                         String firstName = etFirstName.getText().toString();
                         String lastName = etLastName.getText().toString();
 
+                        // Verify that user has put in a first name
                         if (firstName.length() == 0) {
                             Toast.makeText(getContext(), "Missing first name!", Toast.LENGTH_SHORT).show();
                             return;
                         }
 
+                        // Verify that user has put in a last name
                         if (lastName.length() == 0) {
                             Toast.makeText(getContext(), "Missing last name!", Toast.LENGTH_SHORT).show();
                             return;
                         }
 
+                        // Iterate over all the children of the recyclerview
+                        // grab the key and value from each child
+                        // create an attribute with the key/value
+                        // Add it to completedAttributes to add to a Contact object
                         List<Attribute> completedAttributes = new ArrayList<>();
                         for (int i = 0; i < rvEditAttributes.getChildCount(); i++) {
                             EditAttributeAdapter.ViewHolder holder = (EditAttributeAdapter.ViewHolder) rvEditAttributes.findViewHolderForAdapterPosition(i);
-                            Attribute attribute = new Attribute(holder.etKey.getText().toString(), holder.etValue.getText().toString());
+
+                            String attributeKey = holder.etKey.getText().toString();
+                            String attributeValue = holder.etValue.getText().toString();
+                            Attribute attribute = new Attribute(attributeKey, attributeValue);
                             completedAttributes.add(attribute);
                         }
 
@@ -113,6 +122,7 @@ public class AddContactFragment extends Fragment {
                         contact.setLastName(lastName);
                         contact.setAttributes(completedAttributes);
 
+                        // Save Contact to the database
                         AppDatabase.getDatabase(v.getContext()).contactDao().insert(contact);
                     }
                 }).start();
@@ -130,7 +140,10 @@ public class AddContactFragment extends Fragment {
     }
 
     private void dispatchTakePictureIntent() {
+        // Create an intent to take an image
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        // Make sure this intent is available
         if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
             File photoFile = null;
             try {

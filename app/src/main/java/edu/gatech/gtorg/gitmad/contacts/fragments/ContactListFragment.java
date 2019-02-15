@@ -50,9 +50,7 @@ public class ContactListFragment extends Fragment {
         adapter = new ContactAdapter(contacts, new CustomOnClick() {
             @Override
             public void onItemClick(Object o) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("contact", (Contact) o);
-
+                // Whenever an item is clicked, show the ViewContactFragment, and pass in the clicked Contact
                 getFragmentManager().beginTransaction()
                         .replace(R.id.mainFrameLayout, ViewContactFragment.newInstance((Contact) o))
                         .addToBackStack(null)
@@ -81,6 +79,7 @@ public class ContactListFragment extends Fragment {
         view.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // On click of the FAB, show AddContactFragment
                 getFragmentManager().beginTransaction()
                         .replace(R.id.mainFrameLayout, AddContactFragment.newInstance())
                         .addToBackStack(null)
@@ -95,6 +94,8 @@ public class ContactListFragment extends Fragment {
             public void run() {
                 contacts.addAll(AppDatabase.getDatabase(getContext()).contactDao().getAll());
 
+                // Since we fetched the contacts on a background thread (to prevent the UI from hanging)
+                // We have to switch back to the UI thread to make any UI changes
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
