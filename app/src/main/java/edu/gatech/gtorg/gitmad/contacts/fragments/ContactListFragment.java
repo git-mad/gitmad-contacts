@@ -11,12 +11,14 @@ import androidx.appcompat.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.gatech.gtorg.gitmad.contacts.ContactGenerator;
 import edu.gatech.gtorg.gitmad.contacts.CustomOnClick;
 import edu.gatech.gtorg.gitmad.contacts.R;
 import edu.gatech.gtorg.gitmad.contacts.adapters.ContactAdapter;
@@ -34,6 +36,18 @@ public class ContactListFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull final View view, Bundle savedInstanceState) {
+        RecyclerView recyclerView = view.findViewById(R.id.rvContacts);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        List<Contact> contacts = ContactGenerator.generateContacts(20);
+        ContactAdapter adapter = new ContactAdapter(contacts, new CustomOnClick() {
+            @Override
+            public void onItemClick(Object o) {
+                Toast.makeText(getContext(), ((Contact) o).getName(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        recyclerView.setAdapter(adapter);
     }
 
     public static ContactListFragment newInstance() {
