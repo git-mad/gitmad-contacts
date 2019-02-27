@@ -13,8 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import edu.gatech.gtorg.gitmad.contacts.R;
+import edu.gatech.gtorg.gitmad.contacts.adapters.AttributeAdapter;
 import edu.gatech.gtorg.gitmad.contacts.database.AppDatabase;
 import edu.gatech.gtorg.gitmad.contacts.models.Contact;
 
@@ -22,6 +24,9 @@ public class ViewContactFragment extends Fragment {
     private static final String ARG_CONTACT = "contact";
 
     private Contact contact;
+
+    private RecyclerView rvAttributes;
+    private AttributeAdapter attributeAdapter;
 
     public ViewContactFragment() {
         // Required empty public constructor
@@ -57,6 +62,11 @@ public class ViewContactFragment extends Fragment {
         if (contact.getProfileUri() != null) {
             ((ImageView) view.findViewById(R.id.ivProfile)).setImageURI(Uri.parse(contact.getProfileUri()));
         }
+
+        rvAttributes = view.findViewById(R.id.rvAttributes);
+        attributeAdapter = new AttributeAdapter(contact.getAttributes());
+        rvAttributes.setAdapter(attributeAdapter);
+        rvAttributes.setLayoutManager(new LinearLayoutManager(getContext()));
 
         view.findViewById(R.id.btnDelete).setOnClickListener(
                 new View.OnClickListener() {
