@@ -58,6 +58,8 @@ public class ViewContactFragment extends Fragment {
             ((ImageView) view.findViewById(R.id.ivProfile)).setImageURI(Uri.parse(contact.getProfileUri()));
         }
 
+        ((TextView) view.findViewById(R.id.tvAttributes)).setText(contact.getAttributes().toString());
+
         view.findViewById(R.id.btnDelete).setOnClickListener(
                 new View.OnClickListener() {
                     @Override

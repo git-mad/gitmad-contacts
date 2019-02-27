@@ -33,6 +33,12 @@
         android:layout_alignStart="@+id/tvFirstName"
         android:textSize="18sp" />
 
+    <TextView
+        android:id="@+id/tvAttributes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivProfile" />
+
     <Button
         android:id="@+id/btnDelete"
         android:layout_width="match_parent"
