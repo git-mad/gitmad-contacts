@@ -26,13 +26,6 @@ import edu.gatech.gtorg.gitmad.contacts.models.Contact;
 
 public class ContactListFragment extends Fragment {
 
-    private RecyclerView recyclerView;
-    private ContactAdapter adapter;
-
-    private SearchView searchView;
-
-    private List<Contact> contacts;
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,69 +34,6 @@ public class ContactListFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull final View view, Bundle savedInstanceState) {
-        recyclerView = view.findViewById(R.id.rvContacts);
-        searchView = view.findViewById(R.id.searchView);
-
-        contacts = new ArrayList<>();
-        loadData();
-
-        adapter = new ContactAdapter(contacts, new CustomOnClick() {
-            @Override
-            public void onItemClick(Object o) {
-                // Whenever an item is clicked, show the ViewContactFragment, and pass in the clicked Contact
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.mainFrameLayout, ViewContactFragment.newInstance((Contact) o))
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        // TODO: Implement SearchView
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                // We don't care about submit since we're filtering in onChange.
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                // TODO: Filter
-                return false;
-            }
-        });
-
-        // fab stands for Floating Action Button
-        view.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // On click of the FAB, show AddContactFragment
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.mainFrameLayout, AddContactFragment.newInstance())
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
-    }
-
-    private void loadData() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                contacts.addAll(AppDatabase.getDatabase(getContext()).contactDao().getAll());
-
-                // Since we fetched the contacts on a background thread (to prevent the UI from hanging)
-                // We have to switch back to the UI thread to make any UI changes
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.notifyDataSetChanged();
-                    }
-                });
-            }
-        }).start();
     }
 
     public static ContactListFragment newInstance() {
