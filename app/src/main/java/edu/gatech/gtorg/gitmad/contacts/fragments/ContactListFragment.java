@@ -28,6 +28,9 @@ import edu.gatech.gtorg.gitmad.contacts.models.Contact;
 
 public class ContactListFragment extends Fragment {
 
+    private List<Contact> contacts = new ArrayList<>();
+    private ContactAdapter adapter;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,15 +42,41 @@ public class ContactListFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.rvContacts);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        List<Contact> contacts = ContactGenerator.generateContacts(20);
-        ContactAdapter adapter = new ContactAdapter(contacts, new CustomOnClick() {
+        adapter = new ContactAdapter(contacts, new CustomOnClick() {
             @Override
             public void onItemClick(Object o) {
                 Toast.makeText(getContext(), ((Contact) o).getName(), Toast.LENGTH_SHORT).show();
             }
         });
-
         recyclerView.setAdapter(adapter);
+
+        loadContactsFromDatabase();
+
+        view.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.mainFrameLayout, AddContactFragment.newInstance())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+    }
+
+    private void loadContactsFromDatabase() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                contacts.addAll(AppDatabase.getDatabase(getContext()).contactDao().getAll());
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        }).start();
     }
 
     public static ContactListFragment newInstance() {
