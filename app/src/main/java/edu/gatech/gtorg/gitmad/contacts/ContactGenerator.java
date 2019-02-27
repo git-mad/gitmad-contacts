@@ -7,7 +7,7 @@ import edu.gatech.gtorg.gitmad.contacts.models.Attribute;
 import edu.gatech.gtorg.gitmad.contacts.models.Contact;
 
 public class ContactGenerator {
-    public List<Contact> generateContacts(int numContacts) {
+    public static List<Contact> generateContacts(int numContacts) {
         List<Contact> toReturn = new ArrayList<>();
         for (int i = 0; i < numContacts; i++) {
             Contact contact = new Contact();
@@ -21,7 +21,7 @@ public class ContactGenerator {
         return toReturn;
     }
 
-    public List<Attribute> generateAttributes(int numAttributes) {
+    public static List<Attribute> generateAttributes(int numAttributes) {
         List<Attribute> attributes = new ArrayList<>();
         for (int i = 0; i < numAttributes; i++) {
             Attribute attribute = new Attribute();
