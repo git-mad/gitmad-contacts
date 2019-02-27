@@ -45,7 +45,10 @@ public class ContactListFragment extends Fragment {
         adapter = new ContactAdapter(contacts, new CustomOnClick() {
             @Override
             public void onItemClick(Object o) {
-                Toast.makeText(getContext(), ((Contact) o).getName(), Toast.LENGTH_SHORT).show();
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.mainFrameLayout, ViewContactFragment.newInstance((Contact) o))
+                        .addToBackStack(null)
+                        .commit();
             }
         });
         recyclerView.setAdapter(adapter);
@@ -67,6 +70,7 @@ public class ContactListFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                contacts.clear();
                 contacts.addAll(AppDatabase.getDatabase(getContext()).contactDao().getAll());
 
                 getActivity().runOnUiThread(new Runnable() {
