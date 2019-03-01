@@ -33,13 +33,26 @@
             android:layout_below="@+id/etFirstName"
             android:hint="Last name" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAttributes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etLastName" />
+
+        <Button
+            android:id="@+id/btnAddAttribute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rvAttributes"
+            android:layout_centerHorizontal="true"
+            android:text="+ Attribute" />
+
         <Button
             android:id="@+id/btnAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/etLastName"
+            android:layout_below="@+id/btnAddAttribute"
             android:layout_marginTop="24dp"
             android:text="Add" />
-
     </RelativeLayout>
 </ScrollView>

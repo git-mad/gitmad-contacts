@@ -21,10 +21,16 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import edu.gatech.gtorg.gitmad.contacts.ContactGenerator;
 import edu.gatech.gtorg.gitmad.contacts.R;
+import edu.gatech.gtorg.gitmad.contacts.adapters.EditAttributeAdapter;
 import edu.gatech.gtorg.gitmad.contacts.database.AppDatabase;
+import edu.gatech.gtorg.gitmad.contacts.models.Attribute;
 import edu.gatech.gtorg.gitmad.contacts.models.Contact;
 
 import static android.app.Activity.RESULT_OK;
@@ -33,10 +39,13 @@ public class AddContactFragment extends Fragment {
     private static final int REQUEST_IMAGE_CAPTURE = 1;
 
     private Contact contact;
+    private List<Attribute> attributes;
 
     private ImageView ivProfile;
     private EditText etFirstName;
     private EditText etLastName;
+    private RecyclerView rvEditAttributes;
+    private EditAttributeAdapter editAttributesAdapter;
 
     private Uri tempUri;
 
@@ -64,6 +73,20 @@ public class AddContactFragment extends Fragment {
             }
         });
 
+        attributes = new ArrayList<>();
+        editAttributesAdapter = new EditAttributeAdapter(attributes);
+        rvEditAttributes = view.findViewById(R.id.rvAttributes);
+        rvEditAttributes.setAdapter(editAttributesAdapter);
+        rvEditAttributes.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        view.findViewById(R.id.btnAddAttribute).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                attributes.add(new Attribute());
+                editAttributesAdapter.notifyItemInserted(attributes.size() - 1);
+            }
+        });
+
         view.findViewById(R.id.btnAdd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,8 +95,25 @@ public class AddContactFragment extends Fragment {
 
                 contact.setFirstName(firstName);
                 contact.setLastName(lastName);
-                contact.setAttributes(ContactGenerator.generateAttributes(5));
+                // Iterate over all the children of the recyclerview
+                // grab the key and value from each child
+                // create an attribute with the key/value
+                // Add it to completedAttributes to add to a Contact object
+                List<Attribute> completedAttributes = new ArrayList<>();
+                for (int i = 0; i < rvEditAttributes.getChildCount(); i++) {
+                    EditAttributeAdapter.ViewHolder holder = (EditAttributeAdapter.ViewHolder) rvEditAttributes.findViewHolderForAdapterPosition(i);
 
+                    String attributeKey = holder.etKey.getText().toString();
+                    String attributeValue = holder.etValue.getText().toString();
+                    Attribute attribute = new Attribute(attributeKey, attributeValue);
+                    completedAttributes.add(attribute);
+                }
+
+                contact.setFirstName(firstName);
+                contact.setLastName(lastName);
+                contact.setAttributes(completedAttributes);
+
+                // Save Contact to the database
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
