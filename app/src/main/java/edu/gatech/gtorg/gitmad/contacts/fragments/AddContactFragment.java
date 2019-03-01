@@ -93,6 +93,18 @@ public class AddContactFragment extends Fragment {
                 String firstName = etFirstName.getText().toString();
                 String lastName = etLastName.getText().toString();
 
+                // Verify that user has put in a first name
+                if (firstName.length() == 0) {
+                    Toast.makeText(getContext(), "Missing first name!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Verify that user has put in a last name
+                if (lastName.length() == 0) {
+                    Toast.makeText(getContext(), "Missing last name!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 contact.setFirstName(firstName);
                 contact.setLastName(lastName);
                 // Iterate over all the children of the recyclerview

@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -56,7 +55,49 @@ public class AttributeAdapter extends RecyclerView.Adapter<AttributeAdapter.View
             public void onClick(View v) {
                 String key = attributes.get(position).getKey();
                 String value = attributes.get(position).getValue();
-                Toast.makeText(v.getContext(), key + ": " + value, Toast.LENGTH_SHORT).show();
+                Intent intent;
+                switch (key) {
+                    case "Email":
+                        intent = new Intent(Intent.ACTION_SENDTO);
+                        intent.putExtra(Intent.EXTRA_EMAIL, value);
+                        break;
+                    case "Phone":
+                        intent = new Intent(Intent.ACTION_DIAL);
+                        intent.setData(Uri.parse("tel:" + value));
+                        break;
+                    case "Address":
+                        intent = new Intent(Intent.ACTION_VIEW);
+                        try {
+                            intent.setData(Uri.parse("geo:0,0?q=" + URLEncoder.encode(value, "UTF-8")));
+                        } catch (UnsupportedEncodingException e) {
+                            Log.e("AttributeAdapter", "Address Encoding", e);
+                            return;
+                        }
+                        break;
+                    case "Facebook":
+                        intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("https://www.facebook.com/" + value));
+                        break;
+                    case "Instagram":
+                        intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("https://www.instagram.com/" + value));
+                        break;
+                    case "Twitter":
+                        intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("https://www.twitter.com/" + value));
+                        break;
+                    case "Snapchat":
+                        intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("https://www.snapchat.com/" + value));
+                        break;
+                    default:
+                        // Unrecognized key, don't do anything
+                        return;
+                }
+
+                if (intent.resolveActivity(v.getContext().getPackageManager()) != null) {
+                    v.getContext().startActivity(intent);
+                }
             }
         });
     }
