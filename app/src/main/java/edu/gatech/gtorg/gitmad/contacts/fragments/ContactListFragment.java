@@ -67,6 +67,7 @@ public class ContactListFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                contacts.clear();
                 contacts.addAll(AppDatabase.getDatabase(getContext()).contactDao().getAll());
 
                 getActivity().runOnUiThread(new Runnable() {
